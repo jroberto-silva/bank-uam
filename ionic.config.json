@@ -1,0 +1,7 @@
+{
+  "name": "bank-uam",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
