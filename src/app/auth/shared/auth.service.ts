@@ -16,8 +16,9 @@ export class AuthService {
   public static FIREBASE_ERRORS = {
     'auth/email-already-in-use': 'Endereço de e-mail já utilizado.',
     'auth/invalid-email': 'Endereço de e-mail inválido.',
-    'auth/user-not-found': 'Usuário ou senha inválidos.',
-    'auth/weak-password': 'Senha deve ter no mínimo 6 dígitos.'
+    'auth/user-not-found': 'Usuário não encontrado.',
+    'auth/weak-password': 'Senha deve ter no mínimo 6 dígitos.',
+    'auth/wrong-password': 'Usuário ou senha inválidos.'
   };
 
   private userData: User;
@@ -56,22 +57,12 @@ export class AuthService {
   }
 
   passwordReset(passwordResetEmail) {
-    return this.angularFireAuth.sendPasswordResetEmail(passwordResetEmail)
-      .then(() => {
-        console.log('Email de reset de senha enviado. Verifique sua caixa de entrada.');
-      }).catch((error) => {
-        window.alert(error);
-      });
+    return this.angularFireAuth.sendPasswordResetEmail(passwordResetEmail, { url: environment.baseUrl + '/login' });
   }
 
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
     return user !== null && user.emailVerified !== false;
-  }
-
-  get isEmailVerified(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return user.emailVerified !== false;
   }
 
   logout() {

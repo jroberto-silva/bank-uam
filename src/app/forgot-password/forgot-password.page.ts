@@ -5,11 +5,11 @@ import { AlertController } from '@ionic/angular';
 import { AuthService } from '../auth/shared/auth.service';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.page.html',
-  styleUrls: ['./registration.page.scss'],
+  selector: 'app-forgot-password',
+  templateUrl: './forgot-password.page.html',
+  styleUrls: ['./forgot-password.page.scss'],
 })
-export class RegistrationPage implements OnInit {
+export class ForgotPasswordPage implements OnInit {
 
   constructor(
     private authService: AuthService,
@@ -26,24 +26,14 @@ export class RegistrationPage implements OnInit {
     await alert.present();
   }
 
-  register(name, email, password) {
-    this.authService.register(email.value, password.value)
+  reset(email) {
+    this.authService.passwordReset(email.value)
       .then((userCredential) => {
-        // Atualizar perfil do usuário:  userCredential.user.updateProfile({ displayName: name });
-        this.authService.sendEmailVerification().then(() => {
-          this.clearFields(name, email, password);
-        });
+        email.value = '';
+        this.router.navigate(['/forgot-password/email']);
       })
       .catch(error => {
         return this.presentAlert(AuthService.FIREBASE_ERRORS[error.code] || error);
       });
-  }
-
-  clearFields(name, email, password) {
-    email.value = '';
-    name.value = '';
-    password.value = '';
-
-    name.setFocus(true);
   }
 }

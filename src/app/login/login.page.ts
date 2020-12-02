@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
   ) {
   }
 
-  async presentAlert(message, header = 'Ocorreu no Login') {
+  async presentAlert(message, header = 'Erro no Login') {
     const alert = await this.alertController.create({ header, message, buttons: ['OK'] });
     await alert.present();
   }
@@ -27,12 +27,10 @@ export class LoginPage implements OnInit {
   }
 
   login(email, password) {
-    console.log(this.authService.isLoggedIn);
     this.authService.login(email.value, password.value)
       .then((res) => {
-
-        if (!this.authService.isEmailVerified) {
-          return this.router.navigate(['verify-email']);
+        if (!res.user.emailVerified) {
+          return this.presentAlert('Seu e-mail ainda não foi verificado. Por favor, acesse o link enviado para seu e-mail para finalizar o cadastro.').then(() => this.router.navigate(['login']));
         }
 
         return this.router.navigate(['home']);

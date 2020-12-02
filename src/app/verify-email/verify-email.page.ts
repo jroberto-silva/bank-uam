@@ -27,7 +27,6 @@ export class VerifyEmailPage implements OnInit {
         return this.presentAlert('Reenviamos um e-mail com o link para confirmar seu cadastro. Se não encontrar na caixa de entrada, favor verificar no spam.', 'Verifique seu Email');
       })
       .catch((error) => {
-        console.log(error);
         this.presentAlert(error);
       });
   }
