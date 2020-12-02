@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 import { AuthService } from 'src/app/auth/shared/auth.service';
 
@@ -13,17 +13,14 @@ export class LoginPage implements OnInit {
 
   constructor(
     private router: Router,
-    private toastController: ToastController,
+    private alertController: AlertController,
     private authService: AuthService,
-  ) { }
+  ) {
+  }
 
-  async presentToast(errorMessage) {
-    const toast = await this.toastController.create({
-      message: errorMessage ? errorMessage : 'Não foi possível efetuar login no momento. Tente novamente mais tarde.',
-      duration: 2000
-    });
-
-    await toast.present();
+  async presentAlert(message, header = 'Ocorreu no Login') {
+    const alert = await this.alertController.create({ header, message, buttons: ['OK'] });
+    await alert.present();
   }
 
   ngOnInit() {
@@ -41,7 +38,7 @@ export class LoginPage implements OnInit {
         return this.router.navigate(['home']);
       })
       .catch((error) => {
-        return this.presentToast(AuthService.FIREBASE_ERRORS[error.code] || error);
+        return this.presentAlert(AuthService.FIREBASE_ERRORS[error.code] || error);
       });
   }
 }

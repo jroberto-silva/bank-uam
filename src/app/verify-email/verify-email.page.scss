@@ -10,6 +10,7 @@ form {
 
 ion-card-content hr {
   color: var(--ion-color-primary);
-  border: 1px solid var(--ion-color-primary);
+  border-top: 1px solid var(--ion-color-primary);
+  border-bottom: 0;
   margin: 25px 15px;
 }

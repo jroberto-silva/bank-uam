@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 import { AuthService } from '../auth/shared/auth.service';
 
@@ -11,29 +11,35 @@ import { AuthService } from '../auth/shared/auth.service';
 })
 export class RegistrationPage implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router, private toastController: ToastController) {
+  constructor(private authService: AuthService, private router: Router, private alertController: AlertController) {
   }
 
   ngOnInit() {
   }
 
-  async presentToast(errorMessage) {
-    const toast = await this.toastController.create({
-      message: errorMessage ? errorMessage : 'Não foi possível efetuar seu cadastro no momento. Tente novamente mais tarde.',
-      duration: 2000
-    });
-
-    await toast.present();
+  async presentAlert(message, header = 'Ocorreu um Erro') {
+    const alert = await this.alertController.create({ header, message, buttons: ['OK'] });
+    await alert.present();
   }
 
   register(name, email, password) {
     this.authService.register(email.value, password.value)
       .then((userCredential) => {
         // Atualizar perfil do usuário:  userCredential.user.updateProfile({ displayName: name });
-        this.authService.sendEmailVerification();
+        this.authService.sendEmailVerification().then(() => {
+          this.clearFields(name, email, password);
+        });
       })
       .catch(error => {
-        return this.presentToast(AuthService.FIREBASE_ERRORS[error.code] || error);
+        return this.presentAlert(AuthService.FIREBASE_ERRORS[error.code] || error);
       });
+  }
+
+  clearFields(name, email, password) {
+    email.value = '';
+    name.value = '';
+    password.value = '';
+
+    name.setFocus(true);
   }
 }
