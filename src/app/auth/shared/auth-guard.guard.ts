@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     return new Observable<boolean>(observer => {
       this.authService.user.subscribe(user => {
 
-        if (!user.emailVerified) {
+        if (user === null || !user.emailVerified) {
           this.router.navigate(['login']);
           return observer.next(false);
         }
