@@ -65,6 +65,10 @@ export class AuthService {
     return user !== null && user.emailVerified !== false;
   }
 
+  get user() {
+    return this.angularFireAuth.user;
+  }
+
   logout() {
     return this.angularFireAuth.signOut().then(() => {
       localStorage.removeItem('user');

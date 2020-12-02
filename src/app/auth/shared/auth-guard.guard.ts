@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 
 import { AuthService } from 'src/app/auth/shared/auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,16 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate() {
-    if (!this.authService.isLoggedIn) {
-      this.router.navigate(['login']);
-    }
+    return new Observable<boolean>(observer => {
+      this.authService.user.subscribe(user => {
 
-    return this.authService.isLoggedIn;
+        if (!user.emailVerified) {
+          this.router.navigate(['login']);
+          return observer.next(false);
+        }
+
+        return observer.next(true);
+      });
+    });
   }
 }
