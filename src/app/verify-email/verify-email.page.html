@@ -1,22 +1,41 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>verify-email</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Verificação de Email</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="primary">
+  <div class="logo">
+    <span class="main">UAM Bank</span>
+    <hr/>
+    <span class="minor">BANCO DIGITAL</span>
+  </div>
+
+  <ion-card>
+    <ion-card-header align="center">
+      <ion-card-title>Cadastro Realizado</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content align="center">
+      <p>Seu cadastro foi realizado com sucesso.</p>
+      <br>
+      <p>Enviamos um email para confirmação do registro. Não esqueça de verificar o SPAM ;).</p>
+      <hr>
+      <p>Se não recebeu o e-mail, clique no botão abaixo.</p>
+    </ion-card-content>
+  </ion-card>
+
   <ion-grid>
     <ion-row>
-      <h2>Ionic 4 Firebase Verify Email</h2>
-      <p>
-        Please check your email and click on the link to verfiy your email address.
-      </p>
-      <ion-button type="submit" (click)="authService.SendVerificationMail()" expand="block">
-        Resend Verification Email
-      </ion-button>
+      <ion-col>
+        <ion-button size="medium" color="danger" type="submit" (click)="resendEmailVerification()" expand="full">
+          Reenviar E-mail de Verificação
+        </ion-button>
+        <ion-button size="large" color="light" expand="full"  [routerLink]="['/login']">
+          <ion-icon name="return-up-back-outline"></ion-icon>
+          Voltar
+        </ion-button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

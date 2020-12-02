@@ -16,6 +16,7 @@ export class AuthService {
   public static FIREBASE_ERRORS = {
     'auth/email-already-in-use': 'Endereço de e-mail já utilizado.',
     'auth/invalid-email': 'Endereço de e-mail inválido.',
+    'auth/user-not-found': 'Usuário ou senha inválidos.',
     'auth/weak-password': 'Senha deve ter no mínimo 6 dígitos.'
   };
 

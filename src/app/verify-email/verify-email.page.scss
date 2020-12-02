@@ -1,0 +1,15 @@
+form {
+  text-align: center;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40%;
+  transform: translateY(-50%);
+}
+
+ion-card-content hr {
+  color: var(--ion-color-primary);
+  border: 1px solid var(--ion-color-primary);
+  margin: 25px 15px;
+}

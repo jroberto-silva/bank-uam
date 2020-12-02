@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -7,7 +7,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="primary">
+  <div class="logo">
+    <span class="main">UAM Bank</span>
+    <hr/>
+    <span class="minor">BANCO DIGITAL</span>
+  </div>
+
   <form>
     <ion-item lines="full">
       <ion-label position="floating">Nome</ion-label>
@@ -26,7 +32,11 @@
 
     <ion-row>
       <ion-col>
-        <ion-button shape="square" type="submit" (click)="register(displayName, email, password)" expand="block">Cadastrar</ion-button>
+        <ion-button size="large" color="danger" expand="full" type="submit" (click)="register(displayName, email, password)">Cadastrar</ion-button>
+        <ion-button size="medium" color="light" expand="full"  [routerLink]="['/login']">
+          <ion-icon name="return-up-back-outline"></ion-icon>
+          Voltar
+        </ion-button>
       </ion-col>
     </ion-row>
   </form>
