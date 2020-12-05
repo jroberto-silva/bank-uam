@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 
-import { AuthService } from '../auth/shared/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-verify-email',

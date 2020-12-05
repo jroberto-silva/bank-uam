@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ForgotPasswordPage } from './forgot-password.page';
 import { ForgotPasswordEmailPage } from './forgot-password-email.page';
-import { LoginGuard } from '../auth/shared/login-guard.guard';
+import { LoginGuard } from '../../guards/login-guard.guard';
 
 const routes: Routes = [
   {
