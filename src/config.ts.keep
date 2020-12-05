@@ -1,0 +1,13 @@
+import { environment } from './environments/environment';
+
+export const CONFIG = Object.assign({}, environment, {
+  firebaseConfig: {
+    apiKey: '',
+    authDomain: '',
+    databaseURL: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: '',
+    appId: ''
+  }
+});
