@@ -1,0 +1,14 @@
+<ion-card class="feature-card">
+  <ion-card-header>
+    <ion-card-subtitle>
+      <ion-icon size="large" name="cash-outline"></ion-icon>
+      <ion-text>Conta</ion-text>
+    </ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-text class="subject">Saldo disponível</ion-text>
+    <ion-text *ngIf="!loading" class="amount" color="dark">R$ {{bankAccount.balance}}</ion-text>
+    <ion-spinner *ngIf="loading" color="primary"></ion-spinner>
+  </ion-card-content>
+</ion-card>
