@@ -1,0 +1,24 @@
+.logo {
+  width: 60%;
+  margin: 30px auto;
+  display: block;
+  color: white;
+  text-align: center;
+
+  .main {
+    font-weight: bolder;
+    font-size: 1.2em;
+    letter-spacing: 12px;
+  }
+
+  .minor {
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: .8em;
+  }
+
+  hr {
+    background: white;
+    color: white;
+  }
+}
