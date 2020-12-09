@@ -1,0 +1,14 @@
+ion-card {
+  ion-card-content {
+    .available-limit {
+      font-size: .7em;
+      color: black;
+      margin-top: 3px;
+
+      span {
+        font-weight: 550;
+        color: var(--ion-color-success-shade)
+      }
+    }
+  }
+}
