@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -12,11 +12,11 @@ import { AuthService } from '../../services/auth.service';
 export class RegistrationPage implements OnInit {
 
   constructor(
-    private authService: AuthService,
     private router: Router,
-    private alertController: AlertController
-  ) {
-  }
+    private alertController: AlertController,
+    private loadingController: LoadingController,
+    private authService: AuthService,
+  ) { }
 
   ngOnInit() {
   }
@@ -26,17 +26,22 @@ export class RegistrationPage implements OnInit {
     await alert.present();
   }
 
-  register(name, email, password) {
-    this.authService.register(email.value, password.value)
+  async presentLoading() {
+    const loading = await this.loadingController.create({});
+    await loading.present();
+  }
+
+  async register(name, email, password) {
+    await this.presentLoading();
+
+    await this.authService.register(email.value, password.value)
       .then((userCredential) => {
         // Atualizar perfil do usuário:  userCredential.user.updateProfile({ displayName: name });
-        this.authService.sendEmailVerification().then(() => {
-          this.clearFields(name, email, password);
-        });
+        this.authService.sendEmailVerification().then(() => this.clearFields(name, email, password));
       })
-      .catch(error => {
-        return this.presentAlert(AuthService.FIREBASE_ERRORS[error.code] || error);
-      });
+      .catch(error => this.presentAlert(AuthService.FIREBASE_ERRORS[error.code] || error));
+
+    await this.loadingController.dismiss();
   }
 
   clearFields(name, email, password) {
