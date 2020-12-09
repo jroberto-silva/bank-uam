@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -12,9 +12,10 @@ import { AuthService } from '../../services/auth.service';
 export class ForgotPasswordPage implements OnInit {
 
   constructor(
-    private authService: AuthService,
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private loadingController: LoadingController,
+    private authService: AuthService
   ) {
   }
 
@@ -26,14 +27,21 @@ export class ForgotPasswordPage implements OnInit {
     await alert.present();
   }
 
-  reset(email) {
-    this.authService.passwordReset(email.value)
+  async presentLoading() {
+    const loading = await this.loadingController.create({});
+    await loading.present();
+  }
+
+  async reset(email) {
+    await this.presentLoading();
+
+    await this.authService.passwordReset(email.value)
       .then((userCredential) => {
         email.value = '';
         this.router.navigate(['/forgot-password/email']);
       })
-      .catch(error => {
-        return this.presentAlert(AuthService.FIREBASE_ERRORS[error.code] || error);
-      });
+      .catch(error =>  this.presentAlert(AuthService.FIREBASE_ERRORS[error.code] || error));
+
+    await this.loadingController.dismiss();
   }
 }
