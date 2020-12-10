@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { BankAccountService } from 'src/app/services/bank-account.service';
 
 @Component({
   selector: 'app-registration',
@@ -16,6 +17,7 @@ export class RegistrationPage implements OnInit {
     private alertController: AlertController,
     private loadingController: LoadingController,
     private authService: AuthService,
+    private bankAccountService: BankAccountService
   ) { }
 
   ngOnInit() {
@@ -35,9 +37,23 @@ export class RegistrationPage implements OnInit {
     await this.presentLoading();
 
     await this.authService.register(email.value, password.value)
-      .then((userCredential) => {
-        // Atualizar perfil do usuário:  userCredential.user.updateProfile({ displayName: name });
-        this.authService.sendEmailVerification().then(() => this.clearFields(name, email, password));
+      .then(async (userCredential) => {
+        /**
+         * Definindo o nome do usuário no perfil criado no firebase
+         */
+        await userCredential.user.updateProfile({ displayName: name.value });
+
+        /**
+         * Criando uma conta bancária relacionado ao cliente recém cadastrado
+         */
+        await this.bankAccountService.createBankAccount(userCredential.user);
+
+        /**
+         * Enviando e-mail de verificação de cadastro
+         */
+        await this.authService.sendEmailVerification();
+
+        this.clearFields(name, email, password);
       })
       .catch(error => this.presentAlert(AuthService.FIREBASE_ERRORS[error.code] || error));
 
