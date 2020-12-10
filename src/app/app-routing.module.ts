@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from 'src/app/guards/auth-guard.guard';
 import { LoginGuard } from 'src/app/guards/login-guard.guard';
+import { SameRouteGuardGuard } from 'src/app/guards/same-route-guard.guard';
 
 const routes: Routes = [
   {
@@ -22,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'verify-email',
-    canActivate: [LoginGuard],
+    canActivate: [LoginGuard, SameRouteGuardGuard],
     loadChildren: () => import('./pages/verify-email/verify-email.module').then(m => m.VerifyEmailPageModule)
   },
   {
