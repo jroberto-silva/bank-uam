@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import firebase from 'firebase/app';
 
 import { BankAccount } from 'src/app/models/bank.account.model';
 import { User } from 'src/app/models/user.model';
@@ -17,12 +18,15 @@ export class BankAccountService {
     return this.angularFirestore
       .firestore
       .collection('bank-accounts')
-      .where('userId', '==', user.uid)
+      .where('uid', '==', user.uid)
       .get();
   }
 
   saveBankAccount(bankAccount: BankAccount) {
-    return this.angularFirestore.collection('bank-accounts').add(bankAccount);
+    return this.angularFirestore
+      .collection('bank-accounts')
+      .doc(this.makeBankAccountId(bankAccount))
+      .set(bankAccount, { merge: true });
   }
 
   createBankAccount(user: User) {
@@ -31,8 +35,8 @@ export class BankAccountService {
       number: this.generateNewAccountNumber(),
       digit: Math.floor(Math.random() * 10),
       balance: 0.00,
-      userId: user.uid,
-      creationDate: new Date().toUTCString()
+      uid: user.uid,
+      creationDate: firebase.firestore.Timestamp.now()
     };
 
     return this.saveBankAccount(bankAccount);
@@ -44,5 +48,15 @@ export class BankAccountService {
    */
   private generateNewAccountNumber() {
     return Math.floor(Math.random() * (Math.pow(10, this.ACCOUNT_LENGTH) - 1));
+  }
+
+  /**
+   * Retorna o id que um model bankModel terá na collection bank-accounts
+   *
+   * @param {BankAccount} bankAccount
+   * @private
+   */
+  private makeBankAccountId(bankAccount: BankAccount): string {
+    return bankAccount.uid + '-' + bankAccount.agency + '-' + bankAccount.number;
   }
 }
