@@ -1,24 +1,34 @@
-.logo {
-  width: 60%;
-  margin: 30px auto;
-  display: block;
-  color: white;
-  text-align: center;
+ion-card.feature-card {
 
-  .main {
-    font-weight: bolder;
-    font-size: 1.2em;
-    letter-spacing: 10px;
+  ion-card-header {
+    padding-bottom: 5px;
+
+    ion-text {
+      font-weight: 590;
+    }
+
+    ion-card-subtitle ion-text {
+      margin-left: 10px;
+      position: relative;
+      top: -10px;
+    }
   }
 
-  .minor {
-    font-weight: normal;
-    text-transform: uppercase;
-    font-size: .7em;
-  }
+  ion-card-content {
+    letter-spacing: .7px;
 
-  hr {
-    background: white;
-    color: white;
+    ion-text {
+      display: block;
+    }
+
+    .subject {
+      font-size: .8em;
+    }
+
+    .amount {
+      font-weight: 700;
+      margin-top: 10px;
+      font-size: 1.4em;
+    }
   }
 }

@@ -1,3 +1,4 @@
+<!--suppress CheckEmptyScriptTag -->
 <ion-content [fullscreen]="true" color="primary">
   <ion-grid>
     <ion-row>
@@ -7,100 +8,9 @@
     </ion-row>
   </ion-grid>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>
-        <ion-icon size="large" name="card-outline"></ion-icon>
-        <ion-text>Cartão de Crédito</ion-text>
-      </ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-text class="subject">Fatural atual</ion-text>
-      <ion-text class="amount" color="primary">R$ 150,00</ion-text>
-      <ion-text class="available-limit">Limite disponível <span>R$ 850,00</span></ion-text>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>
-        <ion-icon size="large" name="cash-outline"></ion-icon>
-        <ion-text>Conta</ion-text>
-      </ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-text class="subject">Saldo disponível</ion-text>
-      <ion-text class="amount" color="dark">R$ 10.500,00</ion-text>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>
-        <ion-icon size="large" name="analytics-outline"></ion-icon>
-        <ion-text>Opções de investimento</ion-text>
-      </ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-text class="subject">Agora você pode fazer investimentos em renda variável direto pela plataforma. Clique no
-        botão abaixo, e confira:
-      </ion-text>
-
-      <ion-grid>
-        <ion-row>
-          <ion-col align="center">
-            <ion-button align="center" style="margin-top: 25px;" size="small">Acessar</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>
-        <ion-icon size="large" name="list-outline"></ion-icon>
-        <ion-text>Extrato</ion-text>
-      </ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-label>
-            <h2>Pagamento efetuado</h2>
-            <h3>01/11/2020</h3>
-
-            <ion-text class="subject">CONTA DE LUZ</ion-text>
-            <ion-text class="amount">R$ 102,23</ion-text>
-          </ion-label>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>
-            <h2>Pagamento efetuado</h2>
-            <h3>02/11/2020</h3>
-
-            <ion-text class="subject">CONTA DE ÁGUA</ion-text>
-            <ion-text class="amount">R$ 85,00</ion-text>
-          </ion-label>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>
-            <h2>Transferência recebida</h2>
-            <h3>25/10/2020</h3>
-
-            <ion-text class="subject">José da Silva</ion-text>
-            <ion-text class="amount">R$ 1.500,00</ion-text>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <app-cc-summary></app-cc-summary>
+  <app-bank-account-summary [routerLink]="['/bank-account']"></app-bank-account-summary>
+  <app-investment-card></app-investment-card>
 
   <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button size="small" color="primary">
