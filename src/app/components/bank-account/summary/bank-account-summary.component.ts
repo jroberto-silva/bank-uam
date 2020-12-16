@@ -1,6 +1,5 @@
 /* tslint:disable:no-inferrable-types */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DocumentData } from '@angular/fire/firestore';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { BankAccountService } from 'src/app/services/bank-account.service';
@@ -16,9 +15,10 @@ export class BankAccountSummaryComponent implements OnInit {
 
   @Input() public showHeader: boolean = true;
   @Output() public changeLoadingStatus = new EventEmitter<boolean>();
+  @Output() public updateBankAccount = new EventEmitter<BankAccount>();
 
   public loading: boolean;
-  public bankAccount: BankAccount | DocumentData = { balance: 0.0 };
+  public bankAccount: BankAccount;
   public bankAccountDocId: string;
 
   constructor(private bankAccountService: BankAccountService, private authService: AuthService) {
@@ -26,6 +26,7 @@ export class BankAccountSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.updateLoading(true);
   }
 
   private async loadBankAccount(user: User) {
@@ -40,8 +41,10 @@ export class BankAccountSummaryComponent implements OnInit {
 
         const doc = snapshot.docs[0];
 
-        this.bankAccount = doc.data();
+        this.bankAccount = doc.data() as BankAccount;
         this.bankAccountDocId = doc.id;
+
+        this.updateBankAccount.emit(this.bankAccount);
       })
       .catch(error => console.log(error));
 

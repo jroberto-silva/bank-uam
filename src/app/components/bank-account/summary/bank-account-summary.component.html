@@ -8,7 +8,7 @@
 
   <ion-card-content>
     <ion-text class="subject">Saldo disponível</ion-text>
-    <ion-text *ngIf="!loading" class="amount" color="dark">{{ bankAccount.balance | currency: "BRL" }}</ion-text>
+    <ion-text *ngIf="!loading" class="amount" color="dark">{{ (bankAccount ? bankAccount.balance: .0) | currency: "BRL" }}</ion-text>
     <ion-spinner *ngIf="loading" color="primary"></ion-spinner>
   </ion-card-content>
 </ion-card>
