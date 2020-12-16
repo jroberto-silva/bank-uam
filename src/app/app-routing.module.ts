@@ -37,6 +37,7 @@ const routes: Routes = [
   },
   {
     path: 'bank-account',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/bank-account/bank-account.module').then(m => m.BankAccountPageModule)
   },
 ];
