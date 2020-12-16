@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { BankAccount } from 'src/app/models/bank.account.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-bank-account',
@@ -9,8 +10,8 @@ import { BankAccount } from 'src/app/models/bank.account.model';
 })
 export class BankAccountPage implements OnInit {
 
-  private bankAccount: BankAccount;
-  private loadingBankAccount: boolean;
+  bankAccount = new BehaviorSubject<BankAccount>(undefined);
+  loadingBankAccount: boolean;
 
   constructor() {
   }
@@ -18,8 +19,8 @@ export class BankAccountPage implements OnInit {
   ngOnInit() {
   }
 
-  public setBankAccount(bankAccount: BankAccount) {
-    this.bankAccount = bankAccount;
+  public updateBankAccount(bankAccount: BankAccount) {
+    this.bankAccount.next(bankAccount);
   }
 
   public updateLoadingBankAccount(loading: boolean) {
