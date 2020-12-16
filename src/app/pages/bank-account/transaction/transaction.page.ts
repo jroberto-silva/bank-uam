@@ -23,6 +23,7 @@ export class TransactionPage implements OnInit {
   public transaction: Transaction;
   public transactionDocument: DocumentSnapshot<DocumentData>;
   public error: string;
+  public user: User;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,9 +34,10 @@ export class TransactionPage implements OnInit {
   }
 
   ngOnInit() {
-    const tid = this.route.snapshot.paramMap.get('tid');
-
+    this.user = JSON.parse(localStorage.getItem('user')) as User;
     this.loading = true;
+
+    const tid = this.route.snapshot.paramMap.get('tid');
 
     this.transactionService.getTransaction(tid)
       .then((document: DocumentSnapshot<DocumentData>) => {
@@ -62,10 +64,8 @@ export class TransactionPage implements OnInit {
   }
 
   public getTransferAccountInfo(part: 'ORIGIN' | 'DESTINATION') {
-    const user = JSON.parse(localStorage.getItem('user')) as User;
-
     const currentUserData = () => ({
-      name: user.displayName,
+      name: this.user.displayName,
       bank: 'UAM Bank',
       agency: this.bankAccount.agency.toString().padStart(4, '0'),
       account: this.bankAccount.number + '-' + this.bankAccount.digit
@@ -99,6 +99,14 @@ export class TransactionPage implements OnInit {
 
   public get isPayment() {
     return this.transaction.category === TransactionCategoryEnum.PAYMENT;
+  }
+
+  public get dueDate() {
+    return this.transaction.metadata.dueDate ? this.transaction.metadata.dueDate.toDate().toLocaleDateString() : '-';
+  }
+
+  public get documentCode() {
+    return this.transaction.metadata.documentCode ? this.transaction.metadata.documentCode.replace(/[^0-9]/g, '') : '-';
   }
 
   public get category() {

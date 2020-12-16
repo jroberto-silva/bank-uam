@@ -21,11 +21,17 @@ export interface Transaction {
   description: string;
   amount: number;
   metadata?: {
+    // Transfer related fields
     counterpartBank?: string,
     counterpartName?: string,
     counterpartAgency?: string,
     counterpartAccountNumber?: string,
-    counterpartAccountDigit?: string
+    counterpartAccountDigit?: string,
+
+    // payment related fields
+    documentCode?: string;
+    dueDate?: firebase.firestore.Timestamp,
+    recipient?: string
   };
   creationDate: firebase.firestore.Timestamp;
 }

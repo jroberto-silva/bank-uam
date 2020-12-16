@@ -11,6 +11,13 @@ ion-list {
     ion-label {
       font-weight: 500;
       font-size: 1.2em;
+
+      p {
+        font-size: 1em;
+        margin-top: 10px;
+        font-weight: normal;
+        white-space: normal;
+      }
     }
 
     ion-text {
