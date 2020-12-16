@@ -40,6 +40,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/bank-account/bank-account.module').then(m => m.BankAccountPageModule)
   },
+  {
+    path: 'settings',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+  },
 ];
 
 @NgModule({
