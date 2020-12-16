@@ -73,7 +73,7 @@ export class TransactionPage implements OnInit {
 
     const counterPartData = () => ({
       name: this.transaction.metadata.counterpartName || '-',
-      bank: this.transaction.metadata.counterpartBank || '-',
+      bank: this.transaction.metadata.counterpartBank || 'UAM Bank',
       agency: this.transaction.metadata.counterpartAgency || '-',
       account: this.transaction.metadata.counterpartAccountNumber + '-' + this.transaction.metadata.counterpartAccountDigit
     });

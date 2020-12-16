@@ -6,7 +6,6 @@ import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 import { BankAccount } from 'src/app/models/bank.account.model';
 import { Transaction, TransactionTypeEnum, TransactionCategoryEnum } from 'src/app/models/transaction.model';
-import { User } from 'src/app/models/user.model';
 import { Filter } from 'src/app/models/filter.model';
 
 // noinspection JSMethodCanBeStatic
@@ -36,20 +35,43 @@ export class TransactionService {
   }
 
   createTransaction(bankAccount: BankAccount, type: number, category: number, amount: number, description?: string, metadata?: any) {
-    const transaction: Transaction = {
-      uid: bankAccount.uid,
-      bankAccountId: bankAccount.id,
-      type,
-      category,
-      amount,
-      description,
-      metadata,
-      creationDate: firebase.firestore.Timestamp.now()
-    };
+    const bankAccountRef = this.angularFirestore.firestore.collection('bank-accounts').doc(bankAccount.id);
+    const transactionRef = this.angularFirestore.firestore.collection('transactions').doc();
 
-    this.angularFirestore
-      .collection('transactions')
-      .add(transaction);
+    return this.angularFirestore.firestore.runTransaction((dbTransaction) => {
+      return dbTransaction.get(bankAccountRef).then((bankAccountRes: DocumentSnapshot<BankAccount>) => {
+        if (!bankAccountRes.exists) {
+          throw new Error('A conta especificada não existe');
+        }
+
+        const transactionData: Transaction = {
+          uid: bankAccountRes.data().id,
+          bankAccountId: bankAccount.id,
+          type,
+          category,
+          amount,
+          description: description || '',
+          metadata: metadata || {},
+          creationDate: firebase.firestore.Timestamp.now()
+        };
+
+        let balance = bankAccountRes.data().balance;
+
+        if (type === TransactionTypeEnum.CREDIT) {
+          balance += amount;
+        }
+
+        if (type === TransactionTypeEnum.DEBIT) {
+          balance -= amount;
+        }
+
+        if (balance !== bankAccountRes.data().balance) {
+          dbTransaction.update(bankAccountRef, { balance });
+        }
+
+        dbTransaction.set(transactionRef, transactionData);
+      });
+    });
   }
 
   public categoryDisplay(transaction: DocumentSnapshot<Transaction | DocumentData>) {
