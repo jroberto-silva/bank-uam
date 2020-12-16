@@ -89,10 +89,6 @@ export class TransactionPage implements OnInit {
     return this.transaction.category === TransactionCategoryEnum.TRANSFER;
   }
 
-  public get isRefund() {
-    return this.transaction.category === TransactionCategoryEnum.REFUND;
-  }
-
   public get isSavings() {
     return this.transaction.category === TransactionCategoryEnum.SAVINGS;
   }

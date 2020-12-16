@@ -85,10 +85,6 @@ export class TransactionService {
       return transactionData.type === TransactionTypeEnum.DEBIT ? 'Dinheiro resgatado' : 'Dinheiro guardado';
     }
 
-    if (transactionData.category === TransactionCategoryEnum.REFUND) {
-      return 'Estorno';
-    }
-
     return 'Transação efetuada';
   }
 
