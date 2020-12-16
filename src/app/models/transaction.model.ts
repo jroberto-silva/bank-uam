@@ -1,3 +1,5 @@
+import firebase from 'firebase/app';
+
 export enum TransactionTypeEnum {
   CREDIT = 0,
   DEBIT = 1,
@@ -12,13 +14,18 @@ export enum TransactionCategoryEnum {
 }
 
 export interface Transaction {
-  id: string;
-  userId: string;
+  uid: string;
   bankAccountId: string;
   type: number;
   category: number;
   description: string;
   amount: number;
-  metadata: string;
-  creationDate: any;
+  metadata?: {
+    counterpartBank?: string,
+    counterpartName?: string,
+    counterpartAgency?: string,
+    counterpartAccountNumber?: string,
+    counterpartAccountDigit?: string
+  };
+  creationDate: firebase.firestore.Timestamp;
 }
