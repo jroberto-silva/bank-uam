@@ -5,6 +5,7 @@ import firebase from 'firebase/app';
 import { BankAccount } from 'src/app/models/bank.account.model';
 import { User } from 'src/app/models/user.model';
 
+// noinspection JSMethodCanBeStatic
 @Injectable({
   providedIn: 'root'
 })
