@@ -15,6 +15,14 @@ export class BankAccountService {
 
   constructor(private angularFirestore: AngularFirestore) { }
 
+  getBankAccount(id: string) {
+    return this.angularFirestore
+      .firestore
+      .collection('bank-accounts')
+      .doc(id)
+      .get();
+  }
+
   getUserBankAccounts(user: User) {
     return this.angularFirestore
       .firestore
@@ -24,14 +32,17 @@ export class BankAccountService {
   }
 
   saveBankAccount(bankAccount: BankAccount) {
+    bankAccount.id = this.makeBankAccountId(bankAccount);
+
     return this.angularFirestore
       .collection('bank-accounts')
-      .doc(this.makeBankAccountId(bankAccount))
+      .doc(bankAccount.id)
       .set(bankAccount, { merge: true });
   }
 
   createBankAccount(user: User) {
     const bankAccount: BankAccount = {
+      id: null,
       agency: this.DEFAULT_AGENCY,
       number: this.generateNewAccountNumber(),
       digit: Math.floor(Math.random() * 10),
