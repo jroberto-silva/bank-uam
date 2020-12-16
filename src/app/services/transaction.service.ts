@@ -85,6 +85,10 @@ export class TransactionService {
       return transactionData.type === TransactionTypeEnum.DEBIT ? 'Transferência enviada' : 'Transferência recebida';
     }
 
+    if (transactionData.category === TransactionCategoryEnum.DEPOSIT) {
+      return 'Depósito efetuado';
+    }
+
     if (transactionData.category === TransactionCategoryEnum.SAVINGS) {
       return transactionData.type === TransactionTypeEnum.CREDIT ? 'Dinheiro resgatado' : 'Dinheiro guardado';
     }

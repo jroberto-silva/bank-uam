@@ -93,6 +93,10 @@ export class TransactionPage implements OnInit {
     return this.transaction.category === TransactionCategoryEnum.SAVINGS;
   }
 
+  public get isDeposit() {
+    return this.transaction.category === TransactionCategoryEnum.DEPOSIT;
+  }
+
   public get isPayment() {
     return this.transaction.category === TransactionCategoryEnum.PAYMENT;
   }

@@ -50,6 +50,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/transfer/transfer.module').then( m => m.TransferPageModule)
   },
+  {
+    path: 'deposit',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/deposit/deposit.module').then( m => m.DepositPageModule)
+  },
 ];
 
 @NgModule({

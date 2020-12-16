@@ -1,0 +1,47 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title color="primary">
+      Novo Depósito
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row *ngIf="loadingBankAccount" class="ion-margin-top">
+    <ion-col class="transaction-date ion-text-center">
+      <ion-spinner color="primary"></ion-spinner>
+    </ion-col>
+  </ion-row>
+
+  <ion-grid class="step-message" *ngIf="!loadingBankAccount">
+    <ion-row>
+      <ion-col class="ion-padding-horizontal">
+        <ion-list class="ion-text-center" lines="none">
+          <ion-item>
+            <h1>Qual é o valor do seu depósito?</h1>
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Saldo Atual</ion-label>
+            <ion-text>{{ bankAccount.balance | currency: "BRL" }}</ion-text>
+          </ion-item>
+
+          <ion-item class="item-field" lines="full">
+            <label>
+              <input [formControl]="amount" currencyMask
+                     [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"/>
+            </label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-button (click)="save()" size="large" [expand]="'full'" color="primary" [disabled]="!valid">
+    {{ 'CONFIRMAR' }}
+  </ion-button>
+</ion-footer>
