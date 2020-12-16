@@ -1,0 +1,36 @@
+.transaction-date {
+  ion-note {
+    font-size: 1.2em;
+  }
+}
+
+ion-list {
+
+  ion-item {
+
+    ion-label {
+      font-weight: 500;
+      font-size: 1.2em;
+    }
+
+    ion-text {
+      font-size: 1.2em;
+      color: lightslategray;
+    }
+  }
+
+  ion-item-divider {
+    ion-text {
+      font-weight: 500;
+      letter-spacing: 2px;
+    }
+  }
+}
+
+.footer {
+  ion-col {
+    text-align: center;
+    font-size: 1.2em;
+    color: lightslategray;
+  }
+}

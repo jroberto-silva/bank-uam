@@ -1,0 +1,55 @@
+ion-card {
+  ion-card-content {
+    .spinner {
+      display: block;
+      padding: 5px;
+      text-align: center;
+    }
+
+    ion-list {
+      ion-item {
+        --inner-border-width: 0;
+      }
+
+      ion-grid {
+        padding-left: 0;
+        padding-right: 0;
+
+        ion-col {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+
+      .empty-list {
+        ion-text {
+          margin: 30px auto;
+          font-size: .75em;
+        }
+      }
+
+      .transaction-category, h2 {
+        font-weight: 550;
+        font-size: .9em;
+      }
+
+      .transaction-date, h3 {
+        text-align: right;
+        font-size: .75em;
+      }
+
+      .transaction-description {
+        font-size: 1em;
+      }
+
+      .transaction-amount {
+        font-size: 1.4em;
+        font-weight: 700;
+      }
+
+      ion-row:last-of-type {
+        margin-bottom: 25px;
+      }
+    }
+  }
+}

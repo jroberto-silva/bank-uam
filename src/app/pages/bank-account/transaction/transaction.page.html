@@ -1,0 +1,130 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-row *ngIf="loading" class="ion-margin-top">
+      <ion-col class="transaction-date ion-text-center">
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <ion-grid *ngIf="!loading && transactionDocument">
+    <ion-row>
+      <ion-col class="transaction-date ion-text-center ion-no-padding">
+        <h2>{{ category }}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-bottom">
+      <ion-col class="transaction-date ion-text-center ion-no-padding">
+        <ion-note>{{ creationDate }}</ion-note>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="isTransfer && !error" class="ion-margin-top ion-padding-top">
+      <ion-col>
+        <ion-list lines="none">
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Valor</ion-label>
+            <ion-text>{{ transaction.amount | currency: "BRL" }}</ion-text>
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Tipo de Transferência</ion-label>
+            <ion-text>Contas do UAM Bank</ion-text>
+          </ion-item>
+          <ion-item-divider color="light" class="ion-padding ion-margin-bottom">
+            <ion-icon size="large" name="log-out-outline" class="ion-margin-end"></ion-icon>
+            <ion-text class="ion-text-uppercase">ORIGEM</ion-text>
+          </ion-item-divider>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Nome</ion-label>
+            <ion-text>{{ getTransferAccountInfo('ORIGIN').name }}</ion-text>
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Instituição</ion-label>
+            <ion-text>{{ getTransferAccountInfo('ORIGIN').bank }}</ion-text>
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Agência</ion-label>
+            <ion-text>{{ getTransferAccountInfo('ORIGIN').agency }}</ion-text>
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Conta</ion-label>
+            <ion-text>{{ getTransferAccountInfo('ORIGIN').account }}</ion-text>
+          </ion-item>
+          <ion-item-divider color="light" class="ion-padding">
+            <ion-icon size="large" name="log-in-outline" class="ion-margin-end"></ion-icon>
+            <ion-text class="ion-text-uppercase">DESTINO</ion-text>
+          </ion-item-divider>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Nome</ion-label>
+            <ion-text>{{ getTransferAccountInfo('DESTINATION').name }}</ion-text>
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Instituição</ion-label>
+            <ion-text>{{ getTransferAccountInfo('DESTINATION').bank }}</ion-text>
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Agência</ion-label>
+            <ion-text>{{ getTransferAccountInfo('DESTINATION').agency }}</ion-text>
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Conta</ion-label>
+            <ion-text>{{ getTransferAccountInfo('DESTINATION').account }}</ion-text>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="isPayment" class="ion-margin-top ion-padding-top">
+      <ion-col class="transaction-description">
+        <ion-list>
+          <ion-item lines="none">
+            <ion-label>Valor</ion-label>src/app/models/filter.model.ts
+            <ion-text>TESTE</ion-text>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col class="transaction-description" [size]="12">TESTE</ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="isRefund" class="ion-margin-top ion-padding-top">
+      <ion-col class="transaction-description">
+        <ion-list>
+          <ion-item lines="none">
+            <ion-label>Valor</ion-label>
+            <ion-text>TESTE</ion-text>
+          </ion-item>
+        </ion-list>
+        <ion-label mode="">TESTE</ion-label>
+        <ion-text>TESTE</ion-text>
+      </ion-col>
+      <ion-col class="transaction-description" [size]="12">TESTE</ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="isSavings" class="ion-margin-top ion-padding-top">
+      <ion-col class="transaction-description">
+        <ion-list>
+          <ion-item lines="none">
+            <ion-label>Valor</ion-label>
+            <ion-text>TESTE</ion-text>
+          </ion-item>
+        </ion-list>
+        <ion-label mode="">TESTE</ion-label>
+        <ion-text>TESTE</ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin ion-padding-vertical footer">
+      <ion-col class="ion-text-center">
+        <ion-text> UAM Bank | Banco Digital</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

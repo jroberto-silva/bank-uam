@@ -1,0 +1,28 @@
+<ion-card class="feature-card ion-no-padding">
+  <ion-card-content class="ion-no-padding">
+    <div class="spinner">
+      <ion-spinner *ngIf="loading || loadingBankAccount" align="center" color="primary"></ion-spinner>
+    </div>
+
+    <ion-list lines="full">
+      <ion-item *ngFor="let transaction of transactions; let i = index;" [color]="(i % 2) ? 'light' : ''" (click)="openTransaction(transaction)">
+        <ion-grid>
+          <ion-row class="ion-margin-top">
+            <ion-col class="transaction-category" [size]="9">{{ categoryDisplay(transaction) }}</ion-col>
+            <ion-col class="transaction-date">{{ creationDateDisplay(transaction) }}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="transaction-description">{{ descriptionDisplay(transaction) }}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="transaction-amount">{{ transaction.get('amount') | currency: "BRL" }}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item *ngIf="!loading && !loadingBankAccount && !transactions.length" class="empty-list">
+        <ion-text>Você ainda não possui nenhuma transação. :D</ion-text>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
