@@ -33,13 +33,8 @@ export class SettingsPage implements OnInit {
 
     await this.bankAccountService.getUserBankAccounts(user)
       .then(snapshot => {
-        if (snapshot.empty) {
-          return;
-        }
-
-        this.bankAccount = snapshot.docs[0].data() as BankAccount;
+        this.bankAccount = snapshot.empty ? null : snapshot.docs[0].data() as BankAccount;
       })
-      .catch(error => console.log(error))
       .finally(() => this.loadingBankAccount = false);
   }
 }

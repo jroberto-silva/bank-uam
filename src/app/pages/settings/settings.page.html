@@ -3,7 +3,7 @@
   <ion-grid>
     <ion-row>
       <ion-col class="hello">
-        <h1>Olá, {{ user.displayName.split(' ')[0] || '' }}</h1>
+        <h1>Olá, {{ user.displayName ? user.displayName.split(' ')[0] : '' }}</h1>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -31,6 +31,26 @@ export class BankAccountService {
       .get();
   }
 
+  getBankAccountByEmail(email: string) {
+    return this.angularFirestore
+      .firestore
+      .collection('bank-accounts')
+      .where('email', '==', email)
+      .get();
+  }
+
+  getBankAccountByAccountData(agency: number, accountNumber: number) {
+    agency = parseInt(agency.toString().replace(/^0+/g, ''), 10);
+    accountNumber = parseInt(accountNumber.toString(), 10);
+
+    return this.angularFirestore
+      .firestore
+      .collection('bank-accounts')
+      .where('agency', '==', agency)
+      .where('number', '==', accountNumber)
+      .get();
+  }
+
   saveBankAccount(bankAccount: BankAccount) {
     bankAccount.id = this.makeBankAccountId(bankAccount);
 
@@ -48,6 +68,8 @@ export class BankAccountService {
       digit: Math.floor(Math.random() * 10),
       balance: 0.00,
       uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
       creationDate: firebase.firestore.Timestamp.now()
     };
 

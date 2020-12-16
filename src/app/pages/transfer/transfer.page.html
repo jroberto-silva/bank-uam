@@ -1,0 +1,189 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title color="primary">
+      Nova transferência
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row *ngIf="loadingBankAccount" class="ion-margin-top">
+    <ion-col class="transaction-date ion-text-center">
+      <ion-spinner color="primary"></ion-spinner>
+    </ion-col>
+  </ion-row>
+
+  <ion-grid class="step-message" *ngIf="!loadingBankAccount && bankAccount && step === AMOUNT_STEP">
+    <ion-row>
+      <ion-col class="ion-padding-horizontal">
+        <ion-list class="ion-text-center" lines="none">
+          <ion-item>
+            <h1>Qual é o valor da transferência?</h1>
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Saldo disponível</ion-label>
+            <ion-text>{{ bankAccount.balance | currency: "BRL" }}</ion-text>
+          </ion-item>
+
+          <ion-item class="item-field" lines="full">
+            <label>
+              <input [formControl]="amount" currencyMask
+                     [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"/>
+            </label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="step-destination" *ngIf="!loadingBankAccount && step === DESTINATION_STEP">
+    <ion-row>
+      <ion-col class="ion-padding-horizontal">
+        <ion-list class="ion-text-center" lines="none">
+          <ion-item>
+            <h1>Para quem você deseja transferir?</h1>
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Valor da transferência</ion-label>
+            <ion-text>{{ amount.value | currency: "BRL" }}</ion-text>
+          </ion-item>
+
+          <ion-item class="item-field" lines="full">
+            <label>
+              <input type="email" [formControl]="email" placeholder="E-mail"/>
+            </label>
+          </ion-item>
+
+          <ion-item-divider color="light" class="ion-padding ion-margin-vertical ion-padding-vertical">
+            <ion-icon size="large" name="business-outline" class="ion-margin-end"></ion-icon>
+            <ion-text>Ou utilize os dados bancários</ion-text>
+          </ion-item-divider>
+
+          <ion-item class="item-field" lines="full">
+            <label>
+              <input [formControl]="agency" placeholder="Agência" maxlength="4"/>
+            </label>
+          </ion-item>
+          <ion-item class="item-field" lines="full">
+            <label>
+              <input [formControl]="account" placeholder="Conta" maxlength="5"/>
+            </label>
+          </ion-item>
+          <ion-item class="item-field" lines="full">
+            <label>
+              <input [formControl]="digit" placeholder="Dígito" maxlength="1"/>
+            </label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="step-description" *ngIf="!loadingBankAccount && bankAccount && step === COMMENT_STEP">
+    <ion-row>
+      <ion-col class="ion-padding-horizontal">
+        <ion-list class="ion-text-center" lines="none">
+          <ion-item>
+            <h1>Observação</h1>
+          </ion-item>
+
+          <ion-item class="item-field" lines="full">
+            <label>
+              <input [formControl]="description" placeholder="(Opcional)"/>
+            </label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="step-confirmation" *ngIf="!loadingBankAccount && step === CONFIRM_STEP">
+    <ion-row>
+      <ion-col class="ion-padding-horizontal">
+        <ion-list class="ion-text-center" lines="none">
+          <ion-item>
+            <h1>Confirme os dados da transferência</h1>
+          </ion-item>
+
+          <ion-list lines="none" class="ion-margin-vertical ion-padding-top">
+            <ion-item class="ion-margin-bottom">
+              <ion-label>Valor</ion-label>
+              <ion-text>{{ amount.value | currency: "BRL" }}</ion-text>
+            </ion-item>
+
+            <ion-item-divider color="light" class="ion-padding ion-margin-bottom">
+              <ion-icon size="large" name="log-out-outline" class="ion-margin-end"></ion-icon>
+              <ion-text class="ion-text-uppercase">ORIGEM</ion-text>
+            </ion-item-divider>
+            <ion-item class="ion-margin-bottom">
+              <ion-label>Nome</ion-label>
+              <ion-text>{{ user.displayName }}</ion-text>
+            </ion-item>
+            <ion-item class="ion-margin-bottom">
+              <ion-label>Instituição</ion-label>
+              <ion-text>UAM Bank</ion-text>
+            </ion-item>
+            <ion-item class="ion-margin-bottom">
+              <ion-label>Agência</ion-label>
+              <ion-text>{{ bankAccount.agency.toString().padStart(4, '0')}}</ion-text>
+            </ion-item>
+            <ion-item class="ion-margin-bottom">
+              <ion-label>Conta</ion-label>
+              <ion-text>{{ bankAccount.number + '-' + bankAccount.digit }}</ion-text>
+            </ion-item>
+
+            <ion-item-divider color="light" class="ion-padding">
+              <ion-icon size="large" name="log-in-outline" class="ion-margin-end"></ion-icon>
+              <ion-text class="ion-text-uppercase">DESTINO</ion-text>
+            </ion-item-divider>
+
+            <ion-item class="ion-margin-bottom" *ngIf="email.valid">
+              <ion-label>E-mail</ion-label>
+              <ion-text>{{ email.value }}</ion-text>
+            </ion-item>
+
+            <div *ngIf="validateDestination() && !email.valid">
+              <ion-item class="ion-margin-bottom">
+                <ion-label>Instituição</ion-label>
+                <ion-text>UAM Bank</ion-text>
+              </ion-item>
+
+              <ion-item class="ion-margin-bottom">
+                <ion-label>Agência</ion-label>
+                <ion-text>{{ agency.valid.toString().padStart(4, '0') }}</ion-text>
+              </ion-item>
+
+              <ion-item class="ion-margin-bottom">
+                <ion-label>Conta</ion-label>
+                <ion-text>{{ account.value + '-' + digit.value }}</ion-text>
+              </ion-item>
+            </div>
+
+            <div *ngIf="description.value">
+              <ion-item-divider color="light" class="ion-padding ion-margin-top">
+                <ion-icon size="large" name="document-text-outline" class="ion-margin-end"></ion-icon>
+                <ion-text class="ion-text-uppercase">Anotação</ion-text>
+              </ion-item-divider>
+
+              <ion-item class="ion-margin-bottom">
+                <ion-text>{{ description.value }}</ion-text>
+              </ion-item>
+            </div>
+          </ion-list>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-button (click)="continue()" size="large" [expand]="'full'" color="primary" [disabled]="!valid">
+    {{ step < CONFIRM_STEP ? 'CONTINUAR' : 'TRANSFERIR' }}
+  </ion-button>
+  <ion-button (click)="prev()" [expand]="'full'" color="danger" *ngIf="step > 1">
+    VOLTAR
+  </ion-button>
+</ion-footer>

@@ -45,6 +45,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
   },
+  {
+    path: 'transfer',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/transfer/transfer.module').then( m => m.TransferPageModule)
+  },
 ];
 
 @NgModule({

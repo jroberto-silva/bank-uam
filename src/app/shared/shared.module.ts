@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+
+import { NgxCurrencyModule } from 'ngx-currency';
 
 import { BankAccountSummaryComponent } from 'src/app/components/bank-account/summary/bank-account-summary.component';
 import { BankAccountTransactionsComponent } from 'src/app/components/bank-account/transactions/bank-account-transactions.component';
@@ -21,7 +23,9 @@ import { LogoComponent } from 'src/app/components/logo/logo.component';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule
+    ReactiveFormsModule,
+    IonicModule,
+    NgxCurrencyModule
   ],
   exports: [
     BankAccountSummaryComponent,
@@ -32,7 +36,9 @@ import { LogoComponent } from 'src/app/components/logo/logo.component';
 
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
+    NgxCurrencyModule,
     BankAccountTransactionsComponent
   ]
 })
