@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: BankAccountPage
+  },
+  {
+    path: 'transaction/:tid',
+    loadChildren: () => import('./transaction/transaction.module').then( m => m.TransactionPageModule)
   }
 ];
 
