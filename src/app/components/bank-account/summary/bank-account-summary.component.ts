@@ -30,6 +30,10 @@ export class BankAccountSummaryComponent implements OnInit {
   }
 
   private async loadBankAccount(user: User) {
+    if (!user) {
+      return;
+    }
+
     await this.updateLoading(true);
 
     await this.bankAccountService.getUserBankAccounts(user)
