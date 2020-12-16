@@ -78,6 +78,15 @@
             <ion-label>Conta</ion-label>
             <ion-text>{{ getTransferAccountInfo('DESTINATION').account }}</ion-text>
           </ion-item>
+          <div *ngIf="transaction.description">
+            <ion-item-divider color="light" class="ion-padding ion-margin-top">
+              <ion-icon size="large" name="document-text-outline" class="ion-margin-end"></ion-icon>
+              <ion-text class="ion-text-uppercase">Anotação</ion-text>
+            </ion-item-divider>
+            <ion-item class="ion-margin-bottom">
+              <ion-text>{{ transaction.description }}</ion-text>
+            </ion-item>
+          </div>
         </ion-list>
       </ion-col>
     </ion-row>
