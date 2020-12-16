@@ -64,7 +64,7 @@ export class TransactionService {
     }
 
     if (transactionData.category === TransactionCategoryEnum.SAVINGS) {
-      return transactionData.type === TransactionTypeEnum.DEBIT ? 'Dinheiro resgatado' : 'Dinheiro guardado';
+      return transactionData.type === TransactionTypeEnum.CREDIT ? 'Dinheiro resgatado' : 'Dinheiro guardado';
     }
 
     return 'Transação efetuada';

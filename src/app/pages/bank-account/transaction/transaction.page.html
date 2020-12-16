@@ -92,7 +92,7 @@
     </ion-row>
 
     <ion-row *ngIf="isPayment" class="ion-margin-top ion-padding-top">
-      <ion-col class="transaction-description">
+      <ion-col>
         <ion-list lines="none">
           <ion-item class="ion-margin-bottom" lines="full">
             <ion-label>Valor</ion-label>
@@ -137,15 +137,32 @@
     </ion-row>
 
     <ion-row *ngIf="isSavings" class="ion-margin-top ion-padding-top">
-      <ion-col class="transaction-description">
-        <ion-list>
-          <ion-item lines="none">
+      <ion-col>
+        <ion-list class="ion-text-center" lines="none">
+          <ion-item class="ion-margin-bottom">
             <ion-label>Valor</ion-label>
-            <ion-text>TESTE</ion-text>
+            <ion-text>{{ transaction.amount | currency: "BRL" }}</ion-text>
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Data</ion-label>
+            <ion-text>{{ creationDate }}</ion-text>
+          </ion-item>
+
+          <ion-item-divider color="light" class="ion-padding ion-margin-vertical">
+            <ion-icon size="large" name="barcode-outline" class="ion-margin-end"></ion-icon>
+            <ion-text class="ion-text-uppercase">Dados Bancários</ion-text>
+          </ion-item-divider>
+
+          <ion-item class="ion-margin-bottom ion-padding-bottom" lines="full">
+            <ion-label>Agência</ion-label>
+            <ion-text>{{ bankAccount.agency.toString().padStart(4, '0') }}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-margin-bottom ion-padding-bottom"  lines="full">
+            <ion-label>Conta</ion-label>
+            <ion-text>{{ bankAccount.number + '-' + bankAccount.digit }}</ion-text>
           </ion-item>
         </ion-list>
-        <ion-label mode="">TESTE</ion-label>
-        <ion-text>TESTE</ion-text>
       </ion-col>
     </ion-row>
 

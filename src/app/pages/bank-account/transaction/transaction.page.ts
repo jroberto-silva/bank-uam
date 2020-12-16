@@ -97,6 +97,10 @@ export class TransactionPage implements OnInit {
     return this.transaction.category === TransactionCategoryEnum.PAYMENT;
   }
 
+  public get isCredit() {
+    return this.transaction.type === TransactionTypeEnum.CREDIT;
+  }
+
   public get dueDate() {
     return this.transaction.metadata.dueDate ? this.transaction.metadata.dueDate.toDate().toLocaleDateString() : '-';
   }
