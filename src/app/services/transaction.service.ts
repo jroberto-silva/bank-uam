@@ -24,17 +24,6 @@ export class TransactionService {
       .collection('transactions').doc(tid).get();
   }
 
-  getUserTransactions(user: User, filters: Array<Filter> = []) {
-    const transactionsQuery = this.angularFirestore
-      .firestore
-      .collection('transactions')
-      .where('uid', '==', user.uid);
-
-    filters.forEach(filter => transactionsQuery.where(filter.fieldPath, filter.opStr, filter.value));
-
-    return transactionsQuery.get();
-  }
-
   getBankAccountTransactions(bankAccount: BankAccount, filters: Array<Filter> = []) {
     const transactionsQuery = this.angularFirestore
       .firestore
@@ -43,7 +32,7 @@ export class TransactionService {
 
     filters.forEach(filter => transactionsQuery.where(filter.fieldPath, filter.opStr, filter.value));
 
-    return transactionsQuery.get();
+    return transactionsQuery.orderBy('creationDate', 'desc').get();
   }
 
   createTransaction(bankAccount: BankAccount, type: number, category: number, amount: number, description?: string, metadata?: any) {
@@ -61,13 +50,6 @@ export class TransactionService {
     this.angularFirestore
       .collection('transactions')
       .add(transaction);
-  }
-
-  updateTransaction(id: string, transaction: Transaction) {
-    this.angularFirestore
-      .collection('transaction')
-      .doc(id)
-      .set(transaction);
   }
 
   public categoryDisplay(transaction: DocumentSnapshot<Transaction | DocumentData>) {

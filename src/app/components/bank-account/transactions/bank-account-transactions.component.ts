@@ -40,7 +40,7 @@ export class BankAccountTransactionsComponent implements OnInit {
     this.transactionService.getBankAccountTransactions(bankAccount)
       .then((querySnapshot) => {
         this.transactions = querySnapshot.docs;
-      })
+      }).catch(error => console.log(error))
       .finally(() => this.updateLoading(false));
   }
 

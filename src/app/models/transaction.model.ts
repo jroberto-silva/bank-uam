@@ -9,8 +9,7 @@ export enum TransactionTypeEnum {
 export enum TransactionCategoryEnum {
   TRANSFER = 0,
   PAYMENT = 1,
-  SAVINGS = 2,
-  REFUND = 3
+  SAVINGS = 2
 }
 
 export interface Transaction {

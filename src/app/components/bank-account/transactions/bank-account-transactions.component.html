@@ -20,8 +20,12 @@
         </ion-grid>
       </ion-item>
 
-      <ion-item *ngIf="!loading && !loadingBankAccount && !transactions.length" class="empty-list">
+      <ion-item *ngIf="!loading && !loadingBankAccount && (transactions && !transactions.length)" class="empty-list">
         <ion-text>Você ainda não possui nenhuma transação. :D</ion-text>
+      </ion-item>
+
+      <ion-item *ngIf="!loading && !loadingBankAccount && !transactions" class="empty-list">
+        <ion-text>Não foi possível trazer suas transações no momento. :(</ion-text>
       </ion-item>
     </ion-list>
   </ion-card-content>
